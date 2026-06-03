@@ -44,7 +44,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <Card className="shadow-lg">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl mb-2">AASA MedChem</CardTitle>
+            <CardTitle className="text-3xl mb-2 text-black">AASA MedChem</CardTitle>
             <p className="text-gray-500 text-sm">
               Pharmaceutical Inventory Management
             </p>
@@ -52,25 +52,31 @@ export default function LoginPage() {
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                label="Email Address"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@aasa.com"
-                disabled={isLoading}
-                required
-              />
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Email Address</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@aasa.com"
+                  disabled={isLoading}
+                  required
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 bg-white"
+                />
+              </div>
 
-              <Input
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                disabled={isLoading}
-                required
-              />
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  disabled={isLoading}
+                  required
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 bg-white"
+                />
+              </div>
 
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded p-3">
@@ -87,19 +93,19 @@ export default function LoginPage() {
               </Button>
 
               <div className="border-t pt-4 mt-4">
-                <p className="text-xs text-gray-600 mb-3">Demo Credentials:</p>
+                <p className="text-xs text-gray-700 font-medium mb-3">Demo Credentials:</p>
 
                 <div className="space-y-2 text-xs">
-                  <div className="bg-blue-50 p-2 rounded">
-                    <p className="font-medium">Admin Account</p>
-                    <p>Email: admin@aasa.com</p>
-                    <p>Password: admin123</p>
+                  <div className="bg-blue-50 p-2 rounded border border-blue-200">
+                    <p className="font-semibold text-black">Admin Account</p>
+                    <p className="text-gray-800">Email: admin@aasa.com</p>
+                    <p className="text-gray-800">Password: admin123</p>
                   </div>
 
-                  <div className="bg-green-50 p-2 rounded">
-                    <p className="font-medium">Seller Account</p>
-                    <p>Email: seller@aasa.com</p>
-                    <p>Password: seller123</p>
+                  <div className="bg-green-50 p-2 rounded border border-green-200">
+                    <p className="font-semibold text-black">Seller Account</p>
+                    <p className="text-gray-800">Email: seller@aasa.com</p>
+                    <p className="text-gray-800">Password: seller123</p>
                   </div>
                 </div>
               </div>
