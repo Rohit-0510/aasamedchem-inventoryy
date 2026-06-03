@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  SELLER
+}
+
+enum BaseUnit {
+  g
+  kg
+  L
+  mL
+  unit
+}
+
+enum OrderUnit {
+  g
+  kg
+  L
+  mL
+  unit
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  orders    Order[]
+}
+
+model Product {
+  id                  String   @id @default(cuid())
+  name                String
+  sku                 String   @unique
+  description         String?
+  category            String?
+  baseUnit            BaseUnit
+  basePricePerUnit    Decimal  @db.Decimal(20, 6)
+  stockQuantity       Decimal  @db.Decimal(20, 6)
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relations
+  orderItems          OrderItem[]
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  orderNumber String      @unique
+  seller      User        @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId    String
+  status      OrderStatus @default(PENDING)
+  totalAmount Decimal     @db.Decimal(20, 6)
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  orderItems  OrderItem[]
+}
+
+model OrderItem {
+  id              String    @id @default(cuid())
+  order           Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId         String
+  product         Product   @relation(fields: [productId], references: [id])
+  productId       String
+  orderedUnit     OrderUnit
+  orderedQuantity Decimal   @db.Decimal(20, 6)
+  baseQuantity    Decimal   @db.Decimal(20, 6)
+  unitPrice       Decimal   @db.Decimal(20, 6)
+  totalPrice      Decimal   @db.Decimal(20, 6)
+}
