@@ -8,7 +8,7 @@ export function Navbar() {
   const { data: session } = useSession();
 
   const handleLogout = async () => {
-    await signOut({ redirect: true, redirectUrl: "/login" });
+    await signOut({ redirect: true });
   };
 
   return (

@@ -37,7 +37,7 @@ export function ProductCard({
         <div className="bg-blue-50 rounded p-3 mb-3">
           <p className="text-xs text-gray-600">Price per {product.baseUnit}</p>
           <p className="text-lg font-bold text-blue-600">
-            {formatINR(product.basePricePerUnit)}
+            {formatINR(Number(product.basePricePerUnit))}
           </p>
         </div>
 

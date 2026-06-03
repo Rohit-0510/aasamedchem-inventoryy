@@ -194,7 +194,7 @@ export default function AdminProductsPage() {
                                   {product.category || "-"}
                                 </td>
                                 <td className="text-right px-4 py-2">
-                                  {formatINR(product.basePricePerUnit)}
+                                  {formatINR(Number(product.basePricePerUnit))}
                                 </td>
                                 <td className="text-right px-4 py-2">
                                   {product.stockQuantity.toString()}

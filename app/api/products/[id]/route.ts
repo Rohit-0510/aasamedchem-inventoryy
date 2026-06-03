@@ -16,7 +16,7 @@ const UpdateProductSchema = z.object({
 // PUT /api/products/[id] - Update product (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -29,7 +29,7 @@ export async function PUT(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const productId = params.id;
+    const { id: productId } = await params;
     const body = await request.json();
     const data = UpdateProductSchema.parse(body);
 
@@ -78,8 +78,9 @@ export async function PUT(
 // DELETE /api/products/[id] - Delete product (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: productId } = await params;
   try {
     const session = await auth();
 
@@ -90,8 +91,6 @@ export async function DELETE(
     if ((session.user as any).role !== "ADMIN") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
-
-    const productId = params.id;
 
     const product = await prisma.product.findUnique({
       where: { id: productId },

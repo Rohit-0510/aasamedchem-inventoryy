@@ -166,7 +166,7 @@ export function OrderForm({
               <div className="bg-blue-50 p-3 rounded-lg">
                 <p className="text-sm text-gray-600">Current Price</p>
                 <p className="text-lg font-bold text-blue-600">
-                  {formatINR(selectedProduct.basePricePerUnit)} per{" "}
+                  {formatINR(Number(selectedProduct.basePricePerUnit))} per{" "}
                   {selectedProduct.baseUnit}
                 </p>
               </div>

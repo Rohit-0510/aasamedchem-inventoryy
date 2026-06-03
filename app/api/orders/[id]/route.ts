@@ -10,7 +10,7 @@ const UpdateOrderSchema = z.object({
 // PUT /api/orders/[id] - Update order status (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -23,7 +23,7 @@ export async function PUT(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const orderId = params.id;
+    const { id: orderId } = await params;
     const body = await request.json();
     const data = UpdateOrderSchema.parse(body);
 
@@ -65,7 +65,7 @@ export async function PUT(
 // GET /api/orders/[id] - Get single order details
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -74,7 +74,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const orderId = params.id;
+    const { id: orderId } = await params;
     const userId = (session.user as any).id;
     const userRole = (session.user as any).role;
 
